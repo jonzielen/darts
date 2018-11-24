@@ -2,13 +2,10 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = [{
   entry: {
-    main: [
-      './src/sass/main.scss'
-    ]
+    main: './src/sass/main.scss'
   },
   output: {
     path: path.resolve(__dirname, 'public/css')
@@ -56,7 +53,7 @@ const config = [{
       rules: [
         {
           test: /\.js$/,
-          exclude: /node_modules/,
+          exclude: [/(node_modules)/, /(sass)/],
           use: "babel-loader"
         }
       ]
