@@ -30,7 +30,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       filename: '../../public/index.html',
-      template: 'src/index.html',
+      template: './src/index.html',
       minify: {
         collapseWhitespace: true,
         removeComments: true,
