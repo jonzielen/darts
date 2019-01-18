@@ -1,30 +1,31 @@
 {
   "name": "darts",
   "version": "1.0.0",
-  "description": "a js darts web app",
+  "description": "a darts web app",
   "main": "index.js",
   "scripts": {
-    "build:apps": "webpack --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "work:webpack": "node_modules/.bin/webpack -w"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonzielen/darts.git"
+  },
+  "keywords": [
+    "darts"
+  ],
   "author": "jon z",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonzielen/darts/issues"
+  },
+  "homepage": "https://github.com/jonzielen/darts#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "css-loader": "^0.28.11",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.4.0",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
-    "source-map": "^0.7.3",
-    "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^2.0.1",
-    "webpack": "^4.8.1",
-    "webpack-cli": "^2.1.3"
+    "css-loader": "^2.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
   }
 }

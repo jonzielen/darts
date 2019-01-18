@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/sass/src/sass/main.scss"],"names":[],"mappings":"AAEA,KACE,qBAHY,C","file":"main.css","sourcesContent":["$bgColor: #ddd;\n\nbody {\n  background-color: $bgColor;\n}\n"],"sourceRoot":""}
