@@ -1,6 +1,8 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const config = {
   mode: 'production',
@@ -9,9 +11,22 @@ const config = {
     path: path.resolve(__dirname, 'public/js'),
     filename: 'darts.bundle.js'
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+        exclude: /node_modules/
+      }),
+      new OptimizeCSSAssetsPlugin({
+        filename: path.resolve(__dirname, 'public/css/main.css'), // '../../public/css/main.css'
+      })
+    ]
+  },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '../../public/css/main.css'
+      filename: '../css/main.css'
     }),
     new HtmlWebpackPlugin({
       filename: '../../public/index.html',
