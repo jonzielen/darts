@@ -1,13 +1,128 @@
+// @import "compass/functions"
+@import "node_modules/compass-mixins/lib/compass";
+
+
 $jom: #ccc;
 
 html, body {
   background-color: $jom;
   padding: 0;
   margin: 0;
-  color: #000;
+  color: #f5f5f5;
+  font-size: 1rem;
 }
 
 h1 {
-  font-size: 12px;
-  color: #001001;
+  font-size: 1rem;
 }
+
+.hidden {
+  display: none;
+}
+
+
+.flex {
+  @include display-flex;
+}
+//
+// .inline-flex {
+//   @include display-flex(inline-flex);
+// }
+//
+// .flex-column {
+//   @include flex-direction(column);
+// }
+//
+// .flex-column-reverse {
+//   @include flex-direction(column-reverse);
+// }
+//
+// .flex-justify {
+//   @include justify-content(space-between);
+// }
+//
+// .flex-justify-space-around {
+//   @include justify-content(space-around);
+// }
+//
+// .flex-justify-center {
+//   @include justify-content(center);
+// }
+//
+// .flex-align-center {
+//   @include align-items(center);
+//   @include justify-content(center);
+// }
+//
+// .align-items-center {
+//   @include align-items(center);
+// }
+//
+// .align-items-end {
+//   @include align-items(flex-end);
+// }
+//
+// .align-self-center {
+//   @include align-self(center);
+// }
+//
+// .align-self-start {
+//   @include align-self(flex-start);
+// }
+//
+// .align-self-end {
+//   @include align-self(flex-end);
+// }
+//
+// .justify-content-center {
+//   @include justify-content(center);
+// }
+//
+// .flex-wrap {
+//   @include flex-wrap(wrap);
+// }
+//
+// .align-items-stretch {
+//   @include align-items(stretch);
+// }
+//
+// @media (max-width: $screen-xs) {
+//   .flex-xs {
+//     @include display-flex;
+//   }
+//
+//   .flex-column-xs {
+//     @include flex-direction(column);
+//   }
+//
+//   .flex-column-reverse-xs {
+//     @include flex-direction(column-reverse);
+//   }
+//
+//   .flex-wrap-xs {
+//     @include flex-wrap(wrap);
+//   }
+//
+//   .flex-justify-xs {
+//     @include justify-content(space-between);
+//   }
+//
+//   .align-items-center-xs {
+//     @include align-items(center);
+//   }
+//
+//   .flex-justify-space-around-xs {
+//     @include justify-content(space-around);
+//   }
+//
+//   .flex-align-center-xs {
+//     @include align-items(center);
+//     @include justify-content(center);
+//   }
+// }
+//
+// @media (max-width: $screen-sm) {
+//   .flex-column-sm {
+//     @include flex-direction(column);
+//   }
+// }

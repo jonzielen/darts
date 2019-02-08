@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const compass = require('compass');
 
 const config = {
   mode: 'production',
@@ -20,7 +21,7 @@ const config = {
         exclude: /node_modules/
       }),
       new OptimizeCSSAssetsPlugin({
-        filename: path.resolve(__dirname, 'public/css/main.css'), // '../../public/css/main.css'
+        filename: path.resolve(__dirname, 'public/css/main.css'),
       })
     ]
   },
@@ -48,7 +49,9 @@ const config = {
         use: [{
           loader: MiniCssExtractPlugin.loader,
           options: {
-            publicPath: '../public/css'
+            publicPath: compass.compile({ cwd: '../public/css' }, function(err, stdout, stderr) {
+                console.log('done');
+            })
           }
         },
         'css-loader',
