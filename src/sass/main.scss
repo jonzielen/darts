@@ -12,8 +12,56 @@ html, body {
   font-size: 1rem;
 }
 
-h1 {
+h1, h2, h3, h4, h5 {
+  padding: 0;
+  margin: 0;
   font-size: 1rem;
+}
+
+$paddingBase: 12px;
+
+.padding-1-0 {
+  padding: $paddingBase 0;
+}
+
+.padding-0-1 {
+  padding: 0 $paddingBase;
+}
+
+.padding-1-1 {
+  padding: $paddingBase $paddingBase;
+}
+
+.padding-2-1 {
+  padding: $paddingBase*2 $paddingBase;
+}
+
+.padding-1-2 {
+  padding: $paddingBase $paddingBase*2;
+}
+
+.padding-2-2 {
+  padding: $paddingBase*2 $paddingBase*2;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.w25 {
+  width: 25%;
+}
+
+.w50 {
+  width: 50%;
+}
+
+.w75 {
+  width: 75%;
+}
+
+.w100 {
+  width: 100%;
 }
 
 .hidden {
@@ -24,105 +72,64 @@ h1 {
 .flex {
   @include display-flex;
 }
-//
-// .inline-flex {
-//   @include display-flex(inline-flex);
-// }
-//
-// .flex-column {
-//   @include flex-direction(column);
-// }
-//
-// .flex-column-reverse {
-//   @include flex-direction(column-reverse);
-// }
-//
-// .flex-justify {
-//   @include justify-content(space-between);
-// }
-//
-// .flex-justify-space-around {
-//   @include justify-content(space-around);
-// }
-//
-// .flex-justify-center {
-//   @include justify-content(center);
-// }
-//
-// .flex-align-center {
-//   @include align-items(center);
-//   @include justify-content(center);
-// }
-//
-// .align-items-center {
-//   @include align-items(center);
-// }
-//
-// .align-items-end {
-//   @include align-items(flex-end);
-// }
-//
-// .align-self-center {
-//   @include align-self(center);
-// }
-//
-// .align-self-start {
-//   @include align-self(flex-start);
-// }
-//
-// .align-self-end {
-//   @include align-self(flex-end);
-// }
-//
-// .justify-content-center {
-//   @include justify-content(center);
-// }
-//
-// .flex-wrap {
-//   @include flex-wrap(wrap);
-// }
-//
-// .align-items-stretch {
-//   @include align-items(stretch);
-// }
-//
-// @media (max-width: $screen-xs) {
-//   .flex-xs {
-//     @include display-flex;
-//   }
-//
-//   .flex-column-xs {
-//     @include flex-direction(column);
-//   }
-//
-//   .flex-column-reverse-xs {
-//     @include flex-direction(column-reverse);
-//   }
-//
-//   .flex-wrap-xs {
-//     @include flex-wrap(wrap);
-//   }
-//
-//   .flex-justify-xs {
-//     @include justify-content(space-between);
-//   }
-//
-//   .align-items-center-xs {
-//     @include align-items(center);
-//   }
-//
-//   .flex-justify-space-around-xs {
-//     @include justify-content(space-around);
-//   }
-//
-//   .flex-align-center-xs {
-//     @include align-items(center);
-//     @include justify-content(center);
-//   }
-// }
-//
-// @media (max-width: $screen-sm) {
-//   .flex-column-sm {
-//     @include flex-direction(column);
-//   }
-// }
+
+.inline-flex {
+  @include display-flex(inline-flex);
+}
+
+.flex-column {
+  @include flex-direction(column);
+}
+
+.flex-column-reverse {
+  @include flex-direction(column-reverse);
+}
+
+.flex-justify {
+  @include justify-content(space-between);
+}
+
+.flex-justify-space-around {
+  @include justify-content(space-around);
+}
+
+.flex-justify-center {
+  @include justify-content(center);
+}
+
+.flex-align-center {
+  @include align-items(center);
+  @include justify-content(center);
+}
+
+.align-items-center {
+  @include align-items(center);
+}
+
+.align-items-end {
+  @include align-items(flex-end);
+}
+
+.align-self-center {
+  @include align-self(center);
+}
+
+.align-self-start {
+  @include align-self(flex-start);
+}
+
+.align-self-end {
+  @include align-self(flex-end);
+}
+
+.justify-content-center {
+  @include justify-content(center);
+}
+
+.flex-wrap {
+  @include flex-wrap(wrap);
+}
+
+.align-items-stretch {
+  @include align-items(stretch);
+}
