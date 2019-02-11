@@ -18,6 +18,14 @@ h1, h2, h3, h4, h5 {
   font-size: 1rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.active-player {
+  text-decoration: underline;
+}
+
 $paddingBase: 12px;
 
 .padding-1-0 {
@@ -42,10 +50,6 @@ $paddingBase: 12px;
 
 .padding-2-2 {
   padding: $paddingBase*2 $paddingBase*2;
-}
-
-.text-center {
-  text-align: center;
 }
 
 .w25 {

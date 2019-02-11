@@ -13,21 +13,19 @@ import "../sass/main.scss";
       triple = document.querySelector('#game .score-adj .triple'),
       deleteShot = document.querySelector('#game .round-details .delete'),
       addScore = document.querySelector('#game .round-details .add'),
-      scorePlayer1 = {
-        score: [],
-        board : []
-      },
-      scorePlayer2 = {
-        score: [],
-        board : []
-      },
+      scorePlayer1 = new gameProps(),
+      scorePlayer2 = new gameProps(),
       roundScore = [],
-      activePlayer = getActivePlayer();
+      activePlayer = scorePlayer1;
+
+  function gameProps() {
+    this.score = [];
+    this.board = [];
+    this.shot = [];
+  }
 
   selectedScore.forEach(function(elem) {
     elem.addEventListener('click', function() {
-      var points = this.dataset.score;
-
       if (roundScore.length < 3) {
         roundScore.push(Number(this.dataset.score));
         updateRoundDisplay(Number(this.dataset.score), roundScore.length-1);
@@ -50,6 +48,11 @@ import "../sass/main.scss";
 
     gamePlayer1.innerHTML = player1.value;
     gamePlayer2.innerHTML = player2.value;
+
+    scorePlayer1.name = player1.value,
+    scorePlayer1.player = gamePlayer1,
+    scorePlayer2.name = player2.value,
+    scorePlayer2.player = gamePlayer2;
   }
 
   function updateRoundDisplay(score, index) {
@@ -59,36 +62,40 @@ import "../sass/main.scss";
     roundDetails[index].innerHTML = score;
   }
 
-  double.addEventListener('click', function(event) {
+  double.addEventListener('click', function() {
     if (roundScore.length === 0) return;
 
     console.log('double ', roundScore[roundScore.length-1], roundScore[roundScore.length-1]*2);
     updateRoundDisplay(roundScore[roundScore.length-1] + ' (2)', roundScore.length-1);
   });
 
-  triple.addEventListener('click', function(event) {
+  triple.addEventListener('click', function() {
     if (roundScore.length === 0) return;
 
     console.log('triple ', roundScore[roundScore.length-1], roundScore[roundScore.length-1]*3);
     updateRoundDisplay(roundScore[roundScore.length-1] + ' (3)', roundScore.length-1);
   });
 
-  deleteShot.addEventListener('click', function(event) {
+  deleteShot.addEventListener('click', function() {
     roundScore.pop();
     updateRoundDisplay('', roundScore.length);
   });
 
-  addScore.addEventListener('click', function(event) {
+  addScore.addEventListener('click', function() {
     if (roundScore.length === 3) {
-      activePlayer.score.push(roundScore);
-      activePlayer = getActivePlayer();
+      roundScore.forEach(function(elem) {
+        activePlayer.score.push(elem);
+      });
+
       roundDetails.forEach(function(elem) {
         elem.innerHTML = '';
-        roundScore = [];
       });
-    }
 
-    console.log(scorePlayer1, scorePlayer2);
+      activePlayer.player.classList.remove('active-player');
+      activePlayer = getActivePlayer();
+      roundScore = [];
+      activePlayer.player.classList.add('active-player');
+    }
   });
 
   function getActivePlayer() {
