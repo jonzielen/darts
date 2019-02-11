@@ -83,9 +83,16 @@
 
           <div class="flex flex-justify score-bulls">
             <div class="w25">-</div>
-            <button class="points w50" data-score="0">0</button>
+            <button class="points w50" data-score="25">bull</button>
             <div class="w25">-</div>
           </div>
+
+          <div class="flex flex-justify score-adj">
+            <button class="points w25" data-score="0">miss</button>
+            <button class="double w25" data-score="double">2x</button>
+            <button class="triple w25" data-score="triple">3x</button>
+          </div>
+
         </div>
       </div>
 
@@ -93,13 +100,13 @@
       <div class="flex flex-column text-center">
         <h2>Round</h2>
         <div class="flex align-self-center w100 round-details">
-          <button>DEL</button>
+          <button class="delete">DEL</button>
           <div class="flex flex-justify-space-around w100">
             <div class="shot-1 w33"></div>
             <div class="shot-2 w33"></div>
             <div class="shot-3 w33"></div>
           </div>
-          <button>ADD</button>
+          <button class="add">ADD</button>
         </div>
       </div>
 
