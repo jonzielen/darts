@@ -15,7 +15,7 @@ import "../sass/main.scss";
       addScore = document.querySelector('#game .round-details .add'),
       scorePlayer1 = new gameProps(),
       scorePlayer2 = new gameProps(),
-      roundScore = [],
+      // roundScore = [],
       activePlayer = scorePlayer1;
 
   function gameProps() {
@@ -26,9 +26,10 @@ import "../sass/main.scss";
 
   selectedScore.forEach(function(elem) {
     elem.addEventListener('click', function() {
-      if (roundScore.length < 3) {
-        roundScore.push(Number(this.dataset.score));
-        updateRoundDisplay(Number(this.dataset.score), roundScore.length-1);
+      if (activePlayer.shot.length < 3) {
+        // roundScore.push(Number(this.dataset.score));
+        activePlayer.shot.push(Number(this.dataset.score));
+        updateRoundDisplay(Number(this.dataset.score), activePlayer.shot.length-1);
       }
     });
   });
@@ -63,27 +64,28 @@ import "../sass/main.scss";
   }
 
   double.addEventListener('click', function() {
-    if (roundScore.length === 0) return;
+    if (activePlayer.shot.length === 0) return;
 
-    console.log('double ', roundScore[roundScore.length-1], roundScore[roundScore.length-1]*2);
-    updateRoundDisplay(roundScore[roundScore.length-1] + ' (2)', roundScore.length-1);
+    console.log('double ', activePlayer.shot[activePlayer.shot.length-1], activePlayer.shot[activePlayer.shot.length-1]*2);
+    updateRoundDisplay(activePlayer.shot[activePlayer.shot.length-1] + ' (2)', activePlayer.shot.length-1);
   });
 
   triple.addEventListener('click', function() {
-    if (roundScore.length === 0) return;
+    if (activePlayer.shot.length === 0) return;
 
-    console.log('triple ', roundScore[roundScore.length-1], roundScore[roundScore.length-1]*3);
-    updateRoundDisplay(roundScore[roundScore.length-1] + ' (3)', roundScore.length-1);
+    console.log('triple ', activePlayer.shot[activePlayer.shot.length-1], activePlayer.shot[activePlayer.shot.length-1]*3);
+    updateRoundDisplay(activePlayer.shot[activePlayer.shot.length-1] + ' (3)', activePlayer.shot.length-1);
   });
 
   deleteShot.addEventListener('click', function() {
-    roundScore.pop();
-    updateRoundDisplay('', roundScore.length);
+    // roundScore.pop();
+    activePlayer.shot.pop();
+    updateRoundDisplay('', activePlayer.shot.length);
   });
 
   addScore.addEventListener('click', function() {
-    if (roundScore.length === 3) {
-      roundScore.forEach(function(elem) {
+    if (activePlayer.shot.length === 3) {
+      activePlayer.shot.forEach(function(elem) {
         activePlayer.score.push(elem);
       });
 
@@ -91,11 +93,14 @@ import "../sass/main.scss";
         elem.innerHTML = '';
       });
 
-      activePlayer.player.classList.remove('active-player');
+      // activePlayer.player.classList.remove('active-player');
       activePlayer = getActivePlayer();
-      roundScore = [];
-      activePlayer.player.classList.add('active-player');
+      // roundScore = [];
+      activePlayer.shot = [];
+      // activePlayer.player.classList.add('active-player');
     }
+
+    console.log(scorePlayer1, scorePlayer2);
   });
 
   function getActivePlayer() {
