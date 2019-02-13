@@ -49,7 +49,9 @@ import "../sass/main.scss";
   selectedScore.forEach(function(elem) {
     elem.addEventListener('click', function() {
       if (activePlayer.shot.length < 3) {
-        activePlayer.shot.push(Number(this.dataset.score));
+
+        activePlayer.shot.push([Number(this.dataset.score)]);
+
         updateRoundDisplay(Number(this.dataset.score), activePlayer.shot.length-1);
       }
     });
@@ -86,16 +88,30 @@ import "../sass/main.scss";
 
   double.addEventListener('click', function() {
     if (activePlayer.shot.length === 0) return;
+    
+    var shotScore = activePlayer.shot[activePlayer.shot.length-1][0];
 
-    console.log('double ', activePlayer.shot[activePlayer.shot.length-1], activePlayer.shot[activePlayer.shot.length-1]*2);
-    updateRoundDisplay(activePlayer.shot[activePlayer.shot.length-1] + ' (2)', activePlayer.shot.length-1);
+    // console.log('double ', shotScore, Array.isArray(shotScore));
+
+    updateRoundDisplay(shotScore + ' (2)', activePlayer.shot.length-1);
+
+    activePlayer.shot.pop();
+    activePlayer.shot.push([shotScore, shotScore]);
+
   });
 
   triple.addEventListener('click', function() {
     if (activePlayer.shot.length === 0) return;
 
-    console.log('triple ', activePlayer.shot[activePlayer.shot.length-1], activePlayer.shot[activePlayer.shot.length-1]*3);
-    updateRoundDisplay(activePlayer.shot[activePlayer.shot.length-1] + ' (3)', activePlayer.shot.length-1);
+    var shotScore = activePlayer.shot[activePlayer.shot.length-1][0];
+
+    // console.log('triple ', shotScore, Array.isArray(shotScore));
+
+    updateRoundDisplay(shotScore + ' (3)', activePlayer.shot.length-1);
+
+    activePlayer.shot.pop();
+    activePlayer.shot.push([shotScore, shotScore, shotScore]);
+
   });
 
   deleteShot.addEventListener('click', function() {
@@ -105,22 +121,34 @@ import "../sass/main.scss";
 
   addScore.addEventListener('click', function() {
     if (activePlayer.shot.length === 3) {
+      // add score to active player
       activePlayer.shot.forEach(function(elem) {
         activePlayer.score.push(elem);
       });
 
-      roundDetails.forEach(function(elem) {
-        elem.innerHTML = '';
-      });
+      updateBoard(activePlayer);
 
+      console.log(activePlayer.shot.flat());
+
+
+      // updates active player
       activePlayer.player.classList.remove('active-player');
       activePlayer = getActivePlayer();
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
     }
 
+
     console.log(scorePlayer1, scorePlayer2);
   });
+
+  function updateBoard(data) {
+    console.log(data);
+
+    roundDetails.forEach(function(elem) {
+      elem.innerHTML = '';
+    });
+  }
 
   function getActivePlayer() {
     if (scorePlayer1.score.length == scorePlayer2.score.length) return scorePlayer1;
