@@ -7,6 +7,8 @@ import "../sass/main.scss";
       results = document.getElementById('results'),
       gamePlayer1 = document.querySelector('#game .game-player1 h2'),
       gamePlayer2 = document.querySelector('#game .game-player2 h2'),
+      gamePlayer1Points = document.querySelector('#game .game-player1 h3'),
+      gamePlayer2Points = document.querySelector('#game .game-player2 h3'),
       selectedScore = document.querySelectorAll('#game .points'),
       roundDetails = document.querySelectorAll('#game .round-details div[class^="shot-"]'),
       double = document.querySelector('#game .score-adj .double'),
@@ -31,7 +33,8 @@ import "../sass/main.scss";
   }
 
   function gameProps() {
-    this.points = [];
+    this.pointsArray = [];
+    this.pointsTotal = 0;
     this.board = {
       20: new boardPlay(),
       19: new boardPlay(),
@@ -120,6 +123,7 @@ import "../sass/main.scss";
 
       // updates active player
       activePlayer.player.classList.remove('active-player');
+      activePlayer.player.querySelector('.points').innerHTML = addPointsArray(activePlayer);
       activePlayer = getActivePlayer();
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
@@ -153,7 +157,7 @@ import "../sass/main.scss";
       }
 
       if (player.board[score].closed) {
-        player.points.push(score);
+        player.pointsArray.push(score);
       }
     }
   }
@@ -164,6 +168,10 @@ import "../sass/main.scss";
       return scorePlayer1;
     };
     return scorePlayer2;
+  }
+
+  function addPointsArray() {
+
   }
 
 })();
