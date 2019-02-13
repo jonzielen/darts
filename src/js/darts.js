@@ -15,19 +15,40 @@ import "../sass/main.scss";
       addScore = document.querySelector('#game .round-details .add'),
       scorePlayer1 = new gameProps(),
       scorePlayer2 = new gameProps(),
-      // roundScore = [],
       activePlayer = scorePlayer1;
+
+  function boardPlay() {
+    return {
+      closed: false,
+      hits: 0,
+      marker: {
+        0: '-',
+        1: '/',
+        2: 'X',
+        3: 'O'
+      }
+    }
+  }
 
   function gameProps() {
     this.score = [];
-    this.board = [];
+    this.board = {
+      20: new boardPlay(),
+      19: new boardPlay(),
+      18: new boardPlay(),
+      17: new boardPlay(),
+      16: new boardPlay(),
+      15: new boardPlay(),
+      'bulls': new boardPlay()
+    };
     this.shot = [];
+    this.name = document.getElementById('player1').value;
+    this.player = gamePlayer1;
   }
 
   selectedScore.forEach(function(elem) {
     elem.addEventListener('click', function() {
       if (activePlayer.shot.length < 3) {
-        // roundScore.push(Number(this.dataset.score));
         activePlayer.shot.push(Number(this.dataset.score));
         updateRoundDisplay(Number(this.dataset.score), activePlayer.shot.length-1);
       }
@@ -78,7 +99,6 @@ import "../sass/main.scss";
   });
 
   deleteShot.addEventListener('click', function() {
-    // roundScore.pop();
     activePlayer.shot.pop();
     updateRoundDisplay('', activePlayer.shot.length);
   });
@@ -93,11 +113,10 @@ import "../sass/main.scss";
         elem.innerHTML = '';
       });
 
-      // activePlayer.player.classList.remove('active-player');
+      activePlayer.player.classList.remove('active-player');
       activePlayer = getActivePlayer();
-      // roundScore = [];
       activePlayer.shot = [];
-      // activePlayer.player.classList.add('active-player');
+      activePlayer.player.classList.add('active-player');
     }
 
     console.log(scorePlayer1, scorePlayer2);

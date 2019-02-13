@@ -2,6 +2,14 @@
 @import "node_modules/compass-mixins/lib/compass";
 
 
+/* temp styles */
+button {
+  background: none;
+  border: solid 1px #eee;
+  color: #eee;
+}
+/**/
+
 $jom: #ccc;
 
 html, body {
