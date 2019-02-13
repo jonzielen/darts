@@ -31,7 +31,7 @@ import "../sass/main.scss";
   }
 
   function gameProps() {
-    this.score = [];
+    this.points = [];
     this.board = {
       20: new boardPlay(),
       19: new boardPlay(),
@@ -39,7 +39,7 @@ import "../sass/main.scss";
       17: new boardPlay(),
       16: new boardPlay(),
       15: new boardPlay(),
-      'bulls': new boardPlay()
+      25: new boardPlay()
     };
     this.shot = [];
     this.name = document.getElementById('player1').value;
@@ -88,16 +88,13 @@ import "../sass/main.scss";
 
   double.addEventListener('click', function() {
     if (activePlayer.shot.length === 0) return;
-    
-    var shotScore = activePlayer.shot[activePlayer.shot.length-1][0];
 
-    // console.log('double ', shotScore, Array.isArray(shotScore));
+    var shotScore = activePlayer.shot[activePlayer.shot.length-1][0];
 
     updateRoundDisplay(shotScore + ' (2)', activePlayer.shot.length-1);
 
     activePlayer.shot.pop();
     activePlayer.shot.push([shotScore, shotScore]);
-
   });
 
   triple.addEventListener('click', function() {
@@ -105,13 +102,10 @@ import "../sass/main.scss";
 
     var shotScore = activePlayer.shot[activePlayer.shot.length-1][0];
 
-    // console.log('triple ', shotScore, Array.isArray(shotScore));
-
     updateRoundDisplay(shotScore + ' (3)', activePlayer.shot.length-1);
 
     activePlayer.shot.pop();
     activePlayer.shot.push([shotScore, shotScore, shotScore]);
-
   });
 
   deleteShot.addEventListener('click', function() {
@@ -121,15 +115,8 @@ import "../sass/main.scss";
 
   addScore.addEventListener('click', function() {
     if (activePlayer.shot.length === 3) {
-      // add score to active player
-      activePlayer.shot.forEach(function(elem) {
-        activePlayer.score.push(elem);
-      });
 
       updateBoard(activePlayer);
-
-      console.log(activePlayer.shot.flat());
-
 
       // updates active player
       activePlayer.player.classList.remove('active-player');
@@ -138,20 +125,44 @@ import "../sass/main.scss";
       activePlayer.player.classList.add('active-player');
     }
 
-
     console.log(scorePlayer1, scorePlayer2);
   });
 
-  function updateBoard(data) {
-    console.log(data);
+  function updateBoard(player) {
+
+    var flatScore = player.shot.flat();
+    flatScore.map(function(elem) {
+      updateBoardPlay(elem, player);
+    });
 
     roundDetails.forEach(function(elem) {
       elem.innerHTML = '';
     });
   }
 
+  function updateBoardPlay(score, player) {
+
+    if (player.board[score]) {
+
+      if (player.board[score].closed === false) {
+        if (player.board[score].hits < 3) {
+          player.board[score].hits = player.board[score].hits + 1;
+        } else {
+          player.board[score].closed = true;
+        }
+      }
+
+      if (player.board[score].closed) {
+        player.points.push(score);
+      }
+    }
+  }
+
   function getActivePlayer() {
-    if (scorePlayer1.score.length == scorePlayer2.score.length) return scorePlayer1;
+    if (scorePlayer1.shot.length == scorePlayer2.shot.length) {
+      activePlayer.shot = [];
+      return scorePlayer1;
+    };
     return scorePlayer2;
   }
 
