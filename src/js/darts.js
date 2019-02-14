@@ -47,6 +47,7 @@ import "../sass/main.scss";
     this.shot = [];
     this.name = document.getElementById('player1').value;
     this.player = gamePlayer1;
+    this.playerPoints = gamePlayer1Points;
   }
 
   selectedScore.forEach(function(elem) {
@@ -123,7 +124,7 @@ import "../sass/main.scss";
 
       // updates active player
       activePlayer.player.classList.remove('active-player');
-      activePlayer.player.querySelector('.points').innerHTML = addPointsArray(activePlayer);
+      activePlayer.playerPoints.innerHTML = addPointsArray(activePlayer);
       activePlayer = getActivePlayer();
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
@@ -135,6 +136,7 @@ import "../sass/main.scss";
   function updateBoard(player) {
 
     var flatScore = player.shot.flat();
+
     flatScore.map(function(elem) {
       updateBoardPlay(elem, player);
     });
@@ -142,17 +144,28 @@ import "../sass/main.scss";
     roundDetails.forEach(function(elem) {
       elem.innerHTML = '';
     });
+
+    // updates points
+    scorePlayer1.playerPoints = gamePlayer1Points,
+    scorePlayer2.playerPoints = gamePlayer2Points;
+
+    // updates board marks
+    console.log('board: ', player, player.board);
+
+    for (var property in player.board) {
+      document.querySelector('#game .score-'+property+' .p1').innerHTML = player.board[property].marker[player.board[property].hits];
+
+
+    }
   }
 
   function updateBoardPlay(score, player) {
 
     if (player.board[score]) {
-
       if (player.board[score].closed === false) {
         if (player.board[score].hits < 3) {
           player.board[score].hits = player.board[score].hits + 1;
-        } else {
-          player.board[score].closed = true;
+          if (player.board[score].hits === 3) player.board[score].closed = true;
         }
       }
 
@@ -170,8 +183,16 @@ import "../sass/main.scss";
     return scorePlayer2;
   }
 
-  function addPointsArray() {
+  function addPointsArray(player) {
+    var a = activePlayer.pointsArray,
+        sum = a.reduce(function(a, b) { return a + b; }, 0);
 
+    activePlayer.pointsArray = [];
+
+    activePlayer.pointsTotal = activePlayer.pointsTotal + sum;
+
+    if (activePlayer.pointsTotal > 0) return activePlayer.pointsTotal;
+    return '';
   }
 
 })();
