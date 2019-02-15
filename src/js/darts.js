@@ -17,7 +17,8 @@ import "../sass/main.scss";
       addScore = document.querySelector('#game .round-details .add'),
       scorePlayer1 = new gameProps(),
       scorePlayer2 = new gameProps(),
-      activePlayer = scorePlayer1;
+      activePlayer = scorePlayer1,
+      inactivePlayer = scorePlayer2;
 
   function boardPlay() {
     return {
@@ -127,7 +128,6 @@ import "../sass/main.scss";
       activePlayer.player.classList.remove('active-player');
       activePlayer.playerPoints.innerHTML = addPointsArray(activePlayer);
       activePlayer = getActivePlayer();
-      // activePlayer.playerPointsClassName = (activePlayer.playerPointsClassName == '.p1') ? '.p2' : '.p1';
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
     }
@@ -152,8 +152,6 @@ import "../sass/main.scss";
     scorePlayer2.playerPoints = gamePlayer2Points;
 
     // updates board marks
-    console.log('board: ', player, player.board);
-
     for (var property in player.board) {
       document.querySelector('#game .score-'+property+' '+player.playerPointsClassName).innerHTML = player.board[property].marker[player.board[property].hits];
     }
@@ -162,9 +160,10 @@ import "../sass/main.scss";
   function updateBoardPlay(score, player) {
 
     if (player.board[score]) {
-      
       if (player.board[score].closed) {
-        player.pointsArray.push(score);
+        if (inactivePlayer.board[score].closed === false) {
+          player.pointsArray.push(score);
+        }
       }
 
       if (player.board[score].closed === false) {
@@ -180,9 +179,11 @@ import "../sass/main.scss";
     if (scorePlayer1.shot.length == scorePlayer2.shot.length) {
       activePlayer.shot = [];
       scorePlayer1.playerPointsClassName = '.p1';
+      inactivePlayer = scorePlayer2;
       return scorePlayer1;
     };
 
+    inactivePlayer = scorePlayer1;
     scorePlayer2.playerPointsClassName = '.p2';
     return scorePlayer2;
   }
