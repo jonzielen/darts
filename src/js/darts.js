@@ -48,6 +48,7 @@ import "../sass/main.scss";
     this.name = document.getElementById('player1').value;
     this.player = gamePlayer1;
     this.playerPoints = gamePlayer1Points;
+    this.playerPointsClassName = '.p1';
   }
 
   selectedScore.forEach(function(elem) {
@@ -126,6 +127,7 @@ import "../sass/main.scss";
       activePlayer.player.classList.remove('active-player');
       activePlayer.playerPoints.innerHTML = addPointsArray(activePlayer);
       activePlayer = getActivePlayer();
+      // activePlayer.playerPointsClassName = (activePlayer.playerPointsClassName == '.p1') ? '.p2' : '.p1';
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
     }
@@ -153,24 +155,23 @@ import "../sass/main.scss";
     console.log('board: ', player, player.board);
 
     for (var property in player.board) {
-      document.querySelector('#game .score-'+property+' .p1').innerHTML = player.board[property].marker[player.board[property].hits];
-
-
+      document.querySelector('#game .score-'+property+' '+player.playerPointsClassName).innerHTML = player.board[property].marker[player.board[property].hits];
     }
   }
 
   function updateBoardPlay(score, player) {
 
     if (player.board[score]) {
+      
+      if (player.board[score].closed) {
+        player.pointsArray.push(score);
+      }
+
       if (player.board[score].closed === false) {
         if (player.board[score].hits < 3) {
           player.board[score].hits = player.board[score].hits + 1;
           if (player.board[score].hits === 3) player.board[score].closed = true;
         }
-      }
-
-      if (player.board[score].closed) {
-        player.pointsArray.push(score);
       }
     }
   }
@@ -178,8 +179,11 @@ import "../sass/main.scss";
   function getActivePlayer() {
     if (scorePlayer1.shot.length == scorePlayer2.shot.length) {
       activePlayer.shot = [];
+      scorePlayer1.playerPointsClassName = '.p1';
       return scorePlayer1;
     };
+
+    scorePlayer2.playerPointsClassName = '.p2';
     return scorePlayer2;
   }
 
