@@ -132,7 +132,7 @@ import "../sass/main.scss";
       activePlayer.player.classList.add('active-player');
     }
 
-    console.log(scorePlayer1, scorePlayer2);
+    // console.log(scorePlayer1, scorePlayer2);
   });
 
   function updateBoard(player) {
@@ -154,6 +154,18 @@ import "../sass/main.scss";
     // updates board marks
     for (var property in player.board) {
       document.querySelector('#game .score-'+property+' '+player.playerPointsClassName).innerHTML = player.board[property].marker[player.board[property].hits];
+    }
+
+    // winner?
+    var winner = true;
+    for (var property in player.board) {
+      if (player.board[property].closed === false) winner = false;
+    }
+
+    if (winner) {
+      console.log('activePlayer ', activePlayer);
+      game.classList.add('hidden');
+      results.classList.remove('hidden');
     }
   }
 
