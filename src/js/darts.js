@@ -5,6 +5,7 @@ import "../sass/main.scss";
       intro = document.getElementById('intro'),
       game = document.getElementById('game'),
       results = document.getElementById('results'),
+      winnerJOM = document.querySelector('#results #winner'),
       gamePlayer1 = document.querySelector('#game .game-player1 h2'),
       gamePlayer2 = document.querySelector('#game .game-player2 h2'),
       gamePlayer1Points = document.querySelector('#game .game-player1 h3'),
@@ -157,15 +158,19 @@ import "../sass/main.scss";
     }
 
     // winner?
-    var winner = true;
+    var winner = true,
+        greaterPoints = activePlayer.pointsTotal >= inactivePlayer.pointsTotal;
+
+    console.log(activePlayer.pointsTotal, inactivePlayer.pointsTotal);
     for (var property in player.board) {
       if (player.board[property].closed === false) winner = false;
+      if (winner && !greaterPoints) winner = false;
     }
 
     if (winner) {
-      console.log('activePlayer ', activePlayer);
       game.classList.add('hidden');
       results.classList.remove('hidden');
+      winnerJOM.innerHTML = 'WINNER: ' + activePlayer.name;
     }
   }
 
