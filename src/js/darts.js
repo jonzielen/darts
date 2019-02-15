@@ -47,7 +47,7 @@ import "../sass/main.scss";
       25: new boardPlay()
     };
     this.shot = [];
-    this.name = document.getElementById('player1').value;
+    // this.name = document.getElementById('player1').value;
     this.player = gamePlayer1;
     this.playerPoints = gamePlayer1Points;
     this.playerPointsClassName = '.p1';
@@ -77,12 +77,12 @@ import "../sass/main.scss";
     intro.classList.add('hidden');
     game.classList.remove('hidden');
 
-    gamePlayer1.innerHTML = player1.value;
-    gamePlayer2.innerHTML = player2.value;
+    gamePlayer1.innerHTML = player1.value || 'Player 1';
+    gamePlayer2.innerHTML = player2.value || 'Player 2';
 
-    scorePlayer1.name = player1.value,
+    scorePlayer1.name = player1.value || 'Player 1',
     scorePlayer1.player = gamePlayer1,
-    scorePlayer2.name = player2.value,
+    scorePlayer2.name = player2.value || 'Player 2',
     scorePlayer2.player = gamePlayer2;
   }
 
@@ -123,11 +123,10 @@ import "../sass/main.scss";
   addScore.addEventListener('click', function() {
     if (activePlayer.shot.length === 3) {
 
-      updateBoard(activePlayer);
-
       // updates active player
       activePlayer.player.classList.remove('active-player');
       activePlayer.playerPoints.innerHTML = addPointsArray(activePlayer);
+      updateBoard(activePlayer);
       activePlayer = getActivePlayer();
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
@@ -161,13 +160,16 @@ import "../sass/main.scss";
     var winner = true,
         greaterPoints = activePlayer.pointsTotal >= inactivePlayer.pointsTotal;
 
-    console.log(activePlayer.pointsTotal, inactivePlayer.pointsTotal);
     for (var property in player.board) {
-      if (player.board[property].closed === false) winner = false;
-      if (winner && !greaterPoints) winner = false;
+      if (property > 0) {
+        if (player.board[property].closed === false) winner = false;
+      }
     }
 
-    if (winner) {
+    console.log('winner: ', winner, 'greaterPoints: ', greaterPoints, 'winner && greaterPoints: ', winner && greaterPoints, activePlayer.pointsTotal, inactivePlayer.pointsTotal);
+
+    if (winner && greaterPoints) {
+      console.log(scorePlayer1, scorePlayer2);
       game.classList.add('hidden');
       results.classList.remove('hidden');
       winnerJOM.innerHTML = 'WINNER: ' + activePlayer.name;
