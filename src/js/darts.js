@@ -123,10 +123,11 @@ import "../sass/main.scss";
   addScore.addEventListener('click', function() {
     if (activePlayer.shot.length === 3) {
 
+      updateBoard(activePlayer);
+
       // updates active player
       activePlayer.player.classList.remove('active-player');
       activePlayer.playerPoints.innerHTML = addPointsArray(activePlayer);
-      updateBoard(activePlayer);
       activePlayer = getActivePlayer();
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
