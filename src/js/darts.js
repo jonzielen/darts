@@ -19,7 +19,8 @@ import "../sass/main.scss";
       scorePlayer1 = new gameProps(),
       scorePlayer2 = new gameProps(),
       activePlayer = scorePlayer1,
-      inactivePlayer = scorePlayer2;
+      inactivePlayer = scorePlayer2,
+      newGame = document.getElementById('reset');
 
   function boardPlay() {
     return {
@@ -128,6 +129,7 @@ import "../sass/main.scss";
       // updates active player
       activePlayer.player.classList.remove('active-player');
       activePlayer.playerPoints.innerHTML = addPointsArray(activePlayer);
+      winnerCheck(activePlayer);
       activePlayer = getActivePlayer();
       activePlayer.shot = [];
       activePlayer.player.classList.add('active-player');
@@ -135,6 +137,24 @@ import "../sass/main.scss";
 
     // console.log(scorePlayer1, scorePlayer2);
   });
+
+  function winnerCheck(player) {
+    // winner
+    var winner = true,
+        greaterPoints = activePlayer.pointsTotal >= inactivePlayer.pointsTotal;
+
+    for (var property in player.board) {
+      if (property > 0) {
+        if (player.board[property].closed === false) winner = false;
+      }
+    }
+
+    if (winner && greaterPoints) {
+      game.classList.add('hidden');
+      results.classList.remove('hidden');
+      winnerJOM.innerHTML = 'WINNER: ' + activePlayer.name;
+    }
+  }
 
   function updateBoard(player) {
 
@@ -155,25 +175,6 @@ import "../sass/main.scss";
     // updates board marks
     for (var property in player.board) {
       document.querySelector('#game .score-'+property+' '+player.playerPointsClassName).innerHTML = player.board[property].marker[player.board[property].hits];
-    }
-
-    // winner?
-    var winner = true,
-        greaterPoints = activePlayer.pointsTotal >= inactivePlayer.pointsTotal;
-
-    for (var property in player.board) {
-      if (property > 0) {
-        if (player.board[property].closed === false) winner = false;
-      }
-    }
-
-    console.log('winner: ', winner, 'greaterPoints: ', greaterPoints, 'winner && greaterPoints: ', winner && greaterPoints, activePlayer.pointsTotal, inactivePlayer.pointsTotal);
-
-    if (winner && greaterPoints) {
-      console.log(scorePlayer1, scorePlayer2);
-      game.classList.add('hidden');
-      results.classList.remove('hidden');
-      winnerJOM.innerHTML = 'WINNER: ' + activePlayer.name;
     }
   }
 
@@ -220,4 +221,26 @@ import "../sass/main.scss";
     return '';
   }
 
+  newGame.addEventListener('click', function() {
+    resetPlay();
+  });
+
+  function resetPlay() {
+    console.log('reset');
+    intro.classList.remove('hidden');
+    results.classList.add('hidden');
+
+    scorePlayer1 = new gameProps(),
+    scorePlayer2 = new gameProps(),
+    activePlayer = scorePlayer1,
+    inactivePlayer = scorePlayer2,
+    scorePlayer1.playerPoints.innerHTML = '',
+    scorePlayer2.playerPoints.innerHTML = '';
+
+    // reset board marks
+    updateBoard(scorePlayer1);
+    updateBoard(scorePlayer2);
+
+    console.log(activePlayer, inactivePlayer);
+  }
 })();
