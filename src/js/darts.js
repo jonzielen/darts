@@ -1,7 +1,8 @@
 import "../sass/main.scss";
 
 (function() {
-  var startGame = document.getElementById('start-game'),
+  var body = document.body,
+      startGame = document.getElementById('start-game'),
       intro = document.getElementById('intro'),
       game = document.getElementById('game'),
       results = document.getElementById('results'),
@@ -16,10 +17,21 @@ import "../sass/main.scss";
       triple = document.querySelector('#game .score-adj .triple'),
       deleteShot = document.querySelector('#game .round-details .delete'),
       addScore = document.querySelector('#game .round-details .add'),
-      scorePlayer1 = new gameProps(),
-      scorePlayer2 = new gameProps(),
+      scorePlayer1 = new gameProps({
+        playerPointsClassName: '.p1',
+        player: gamePlayer1,
+        playerPoints: gamePlayer1Points,
+        active: true
+      }),
+      scorePlayer2 = new gameProps({
+        playerPointsClassName: '.p2',
+        player: gamePlayer2,
+        playerPoints: gamePlayer2Points,
+        active: false
+      }),
       activePlayer = scorePlayer1,
       inactivePlayer = scorePlayer2,
+      saveGame = document.getElementById('save-game'),
       newGame = document.getElementById('reset');
 
   function boardPlay() {
@@ -35,7 +47,13 @@ import "../sass/main.scss";
     }
   }
 
-  function gameProps() {
+  function gameProps(data) {
+
+    // adds player specific data
+    for (var prop in data) {
+      this[prop] = data[prop];
+    }
+
     this.pointsArray = [];
     this.pointsTotal = 0;
     this.board = {
@@ -48,10 +66,6 @@ import "../sass/main.scss";
       25: new boardPlay()
     };
     this.shot = [];
-    // this.name = document.getElementById('player1').value;
-    this.player = gamePlayer1;
-    this.playerPoints = gamePlayer1Points;
-    this.playerPointsClassName = '.p1';
   }
 
   selectedScore.forEach(function(elem) {
@@ -75,8 +89,7 @@ import "../sass/main.scss";
   });
 
   function buildGame() {
-    intro.classList.add('hidden');
-    game.classList.remove('hidden');
+    hideShow(game,intro);
 
     gamePlayer1.innerHTML = player1.value || 'Player 1';
     gamePlayer2.innerHTML = player2.value || 'Player 2';
@@ -150,8 +163,7 @@ import "../sass/main.scss";
     }
 
     if (winner && greaterPoints) {
-      game.classList.add('hidden');
-      results.classList.remove('hidden');
+      hideShow(results, game);
       winnerJOM.innerHTML = 'WINNER: ' + activePlayer.name;
     }
   }
@@ -199,13 +211,11 @@ import "../sass/main.scss";
   function getActivePlayer() {
     if (scorePlayer1.shot.length == scorePlayer2.shot.length) {
       activePlayer.shot = [];
-      scorePlayer1.playerPointsClassName = '.p1';
       inactivePlayer = scorePlayer2;
       return scorePlayer1;
     };
 
     inactivePlayer = scorePlayer1;
-    scorePlayer2.playerPointsClassName = '.p2';
     return scorePlayer2;
   }
 
@@ -226,9 +236,7 @@ import "../sass/main.scss";
   });
 
   function resetPlay() {
-    console.log('reset');
-    intro.classList.remove('hidden');
-    results.classList.add('hidden');
+    hideShow(intro, results);
 
     scorePlayer1 = new gameProps(),
     scorePlayer2 = new gameProps(),
@@ -242,5 +250,10 @@ import "../sass/main.scss";
     updateBoard(scorePlayer2);
 
     console.log(activePlayer, inactivePlayer);
+  }
+
+  function hideShow(elem1, elem2) {
+    elem1.classList.remove('hidden');
+    elem2.classList.add('hidden');
   }
 })();
