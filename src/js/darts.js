@@ -6,7 +6,9 @@ import "../sass/main.scss";
       intro = document.getElementById('intro'),
       game = document.getElementById('game'),
       results = document.getElementById('results'),
-      winnerJOM = document.querySelector('#results #winner'),
+      resultsWinner = document.querySelector('#results #winner'),
+      player1 = document.getElementById('player1'),
+      player2 = document.getElementById('player2'),
       gamePlayer1 = document.querySelector('#game .game-player1 h2'),
       gamePlayer2 = document.querySelector('#game .game-player2 h2'),
       gamePlayer1Points = document.querySelector('#game .game-player1 h3'),
@@ -81,23 +83,19 @@ import "../sass/main.scss";
 
   startGame.addEventListener('click', function(event) {
     event.preventDefault();
-
-    var player1 = document.getElementById('player1'),
-        player2 = document.getElementById('player2');
-
     buildGame();
   });
 
   function buildGame() {
+    var p1Name = player1.value || 'Player 1',
+        p2Name = player2.value || 'Player 2';
+
+    gamePlayer1.innerHTML = p1Name,
+    gamePlayer2.innerHTML = p2Name,
+    scorePlayer1.name = p1Name,
+    scorePlayer2.name = p2Name;
+
     hideShow(game,intro);
-
-    gamePlayer1.innerHTML = player1.value || 'Player 1';
-    gamePlayer2.innerHTML = player2.value || 'Player 2';
-
-    scorePlayer1.name = player1.value || 'Player 1',
-    scorePlayer1.player = gamePlayer1,
-    scorePlayer2.name = player2.value || 'Player 2',
-    scorePlayer2.player = gamePlayer2;
   }
 
   function updateRoundDisplay(score, index) {
@@ -164,7 +162,7 @@ import "../sass/main.scss";
 
     if (winner && greaterPoints) {
       hideShow(results, game);
-      winnerJOM.innerHTML = 'WINNER: ' + activePlayer.name;
+      resultsWinner.innerHTML = 'WINNER: ' + activePlayer.name;
     }
   }
 
